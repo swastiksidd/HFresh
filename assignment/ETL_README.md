@@ -2,30 +2,30 @@
 ---
 -assignment
 
-|--bins
+--bins
 
-      |----config
-                 |------config.py => Source Path, Target Path, Execution date. All the parameters are there in this config. Please make sure to change it before running it in your environment.
+      ----config
+                 |------config.py => Source Path, Target Path, Execution date (rest are for testing). All the parameters are there in this config. Please make sure to change it before running it in your environment.
                  |------spark_config.py => contains Spark configuration properties. Edit it based on your requirement 
                  |------properties.py => contains Log related configuration. Change the log path, file name, file path, log level from here.
                  
-      |----src
+      ----src
                  |------core.py => Contains core logic/methods. You can add up any modules,functions or classes in this directory.
 
-      |----utils
+      ----utils
                  |------logging_session.py =>contians logger object. it is used to create and write logs across project.
                  |------error_log.py => contains error formatter. A unique error logging is followed across project.
                  |------create_spark_inst.py => used to create spark instance for the project.
                  
-|--input => All the input json files. Change config.py to control the source path.
+--input => All the input json files. Change config.py to control the source path.
 
-|--output => contains output csv file. Change config.py to control target path
+--output => contains output csv file. Change config.py to control target path
 
-|--logs => All the logs will be captured in this folder. Control the log path from properties.py.
+--logs => All the logs will be captured in this folder. Control the log path from properties.py.
 
-|--driver.py => It is the single point to trigger the project. It contains the main method.
+--driver.py => It is the single point to trigger the project. It contains the main method.
 
-|--executeMe.sh => Contains spark submit command. Trigger the project using "sh executeMe.sh"
+--executeMe.sh => Contains spark submit command. Trigger the project using "sh executeMe.sh"
 
 # Approach
 ---
@@ -42,10 +42,14 @@
 - Change config.py, properties.py, spark_config.py based on your requirement. and trigger executeMe.sh using "sh executeMe.sh".
 - This code is flexible, because we just need to trigger driver.py and in executeMe.sh we are calculating the location driver.py and triggering it.
 
-# Test cases
+# Test cases & Testing
 ---
 - Using pytest module, we will run unit test cases.
 - Is it not installed then install it using pip => pip3 install pytest
+- TestData is in test_data folder. These contains 3 records from actual data. Place it in your cluster and then same needs to updated in config.py (test_path).
+- The testing process will store the output data (like parquet, report.csv) based on the test data, in dest_location. Config destination location in config.py (dest_path).
+- At last we are comparing the actual and expected results and returning the outcome in log file itself.
+- To trigger the test process just run testMe.sh using "sh testMe.sh". the logic to test the process is in testRun.py.
 
 ## Bonus points
 - Config management. => Everything is configurable in the code.
